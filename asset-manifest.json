@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/p-dim-popov/Big-Form-Problem/static/css/main.ec31d5ce.chunk.css",
-    "main.js": "/p-dim-popov/Big-Form-Problem/static/js/main.bbb0143f.chunk.js",
-    "main.js.map": "/p-dim-popov/Big-Form-Problem/static/js/main.bbb0143f.chunk.js.map",
-    "runtime-main.js": "/p-dim-popov/Big-Form-Problem/static/js/runtime-main.5c3e751c.js",
-    "runtime-main.js.map": "/p-dim-popov/Big-Form-Problem/static/js/runtime-main.5c3e751c.js.map",
-    "static/js/2.90ba3880.chunk.js": "/p-dim-popov/Big-Form-Problem/static/js/2.90ba3880.chunk.js",
-    "static/js/2.90ba3880.chunk.js.map": "/p-dim-popov/Big-Form-Problem/static/js/2.90ba3880.chunk.js.map",
-    "index.html": "/p-dim-popov/Big-Form-Problem/index.html",
-    "static/css/main.ec31d5ce.chunk.css.map": "/p-dim-popov/Big-Form-Problem/static/css/main.ec31d5ce.chunk.css.map",
-    "static/js/2.90ba3880.chunk.js.LICENSE.txt": "/p-dim-popov/Big-Form-Problem/static/js/2.90ba3880.chunk.js.LICENSE.txt"
+    "main.css": "/Big-Form-Problem/static/css/main.ec31d5ce.chunk.css",
+    "main.js": "/Big-Form-Problem/static/js/main.bbb0143f.chunk.js",
+    "main.js.map": "/Big-Form-Problem/static/js/main.bbb0143f.chunk.js.map",
+    "runtime-main.js": "/Big-Form-Problem/static/js/runtime-main.efca4546.js",
+    "runtime-main.js.map": "/Big-Form-Problem/static/js/runtime-main.efca4546.js.map",
+    "static/js/2.90ba3880.chunk.js": "/Big-Form-Problem/static/js/2.90ba3880.chunk.js",
+    "static/js/2.90ba3880.chunk.js.map": "/Big-Form-Problem/static/js/2.90ba3880.chunk.js.map",
+    "index.html": "/Big-Form-Problem/index.html",
+    "static/css/main.ec31d5ce.chunk.css.map": "/Big-Form-Problem/static/css/main.ec31d5ce.chunk.css.map",
+    "static/js/2.90ba3880.chunk.js.LICENSE.txt": "/Big-Form-Problem/static/js/2.90ba3880.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.5c3e751c.js",
+    "static/js/runtime-main.efca4546.js",
     "static/js/2.90ba3880.chunk.js",
     "static/css/main.ec31d5ce.chunk.css",
     "static/js/main.bbb0143f.chunk.js"
