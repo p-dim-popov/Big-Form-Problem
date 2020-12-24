@@ -1,20 +1,21 @@
 {
   "files": {
-    "main.css": "/Big-Form-Problem/static/css/main.ec31d5ce.chunk.css",
-    "main.js": "/Big-Form-Problem/static/js/main.bbb0143f.chunk.js",
-    "main.js.map": "/Big-Form-Problem/static/js/main.bbb0143f.chunk.js.map",
+    "main.css": "/Big-Form-Problem/static/css/main.cbefd4b8.chunk.css",
+    "main.js": "/Big-Form-Problem/static/js/main.9cdbee04.chunk.js",
+    "main.js.map": "/Big-Form-Problem/static/js/main.9cdbee04.chunk.js.map",
     "runtime-main.js": "/Big-Form-Problem/static/js/runtime-main.efca4546.js",
     "runtime-main.js.map": "/Big-Form-Problem/static/js/runtime-main.efca4546.js.map",
-    "static/js/2.90ba3880.chunk.js": "/Big-Form-Problem/static/js/2.90ba3880.chunk.js",
-    "static/js/2.90ba3880.chunk.js.map": "/Big-Form-Problem/static/js/2.90ba3880.chunk.js.map",
+    "static/js/2.f361a632.chunk.js": "/Big-Form-Problem/static/js/2.f361a632.chunk.js",
+    "static/js/2.f361a632.chunk.js.map": "/Big-Form-Problem/static/js/2.f361a632.chunk.js.map",
     "index.html": "/Big-Form-Problem/index.html",
-    "static/css/main.ec31d5ce.chunk.css.map": "/Big-Form-Problem/static/css/main.ec31d5ce.chunk.css.map",
-    "static/js/2.90ba3880.chunk.js.LICENSE.txt": "/Big-Form-Problem/static/js/2.90ba3880.chunk.js.LICENSE.txt"
+    "static/css/main.cbefd4b8.chunk.css.map": "/Big-Form-Problem/static/css/main.cbefd4b8.chunk.css.map",
+    "static/js/2.f361a632.chunk.js.LICENSE.txt": "/Big-Form-Problem/static/js/2.f361a632.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/Big-Form-Problem/static/media/body-background.1908917b.png"
   },
   "entrypoints": [
     "static/js/runtime-main.efca4546.js",
-    "static/js/2.90ba3880.chunk.js",
-    "static/css/main.ec31d5ce.chunk.css",
-    "static/js/main.bbb0143f.chunk.js"
+    "static/js/2.f361a632.chunk.js",
+    "static/css/main.cbefd4b8.chunk.css",
+    "static/js/main.9cdbee04.chunk.js"
   ]
 }
