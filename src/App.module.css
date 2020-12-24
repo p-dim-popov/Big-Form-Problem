@@ -1,7 +1,15 @@
 .container {
     display: flex;
+    flex-wrap: wrap;
 }
 
-.container > div {
-    flex-grow: 1;
+.container > * {
+    margin: 2px;
+}
+
+@media (min-width: 768px) {
+    .container{
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
 }
