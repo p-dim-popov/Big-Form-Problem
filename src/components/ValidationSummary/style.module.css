@@ -1,5 +1,6 @@
 .validationSummary {
-    color: red;
+    color: darkgreen;
+    font-weight: bold;
+    font-size: small;
     list-style-type: none;
-    font-size: smaller;
 }

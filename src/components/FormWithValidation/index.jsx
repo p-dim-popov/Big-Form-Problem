@@ -12,6 +12,7 @@ export default class FormWithValidation extends Component {
 
         this.state = {
             sentData: false,
+            submitDisabled: false,
         }
 
         this.configureChildren()
@@ -62,20 +63,26 @@ export default class FormWithValidation extends Component {
     submitHandler = async (event) => {
         event.preventDefault()
 
+        await this.setState({submitDisabled: true})
         Object.values(this.validators).forEach(v => v())
         const areAllValid = Object.values(this.form).filter(v => v === null).length === 0
-        if (!areAllValid) return
+        if (!areAllValid) {
+            this.setState({submitDisabled: false})
+            return
+        }
 
         if (await DataService.sendForm(this.form))
             this.setState({sentData: true})
+
+        this.setState({submitDisabled: false})
     }
 
     render() {
         return (
             <div>
                 {!!this.state.sentData ? (
-                        <div>
-                            <div>See results:
+                        <div className={styles.result}>
+                            <div>See results:&nbsp;
                                 <a href="https://webhook.site/#!/d58c2bb7-5c45-46a5-828d-438c5080249b/2f4aa726-34b1-4b44-90ac-778cc2da4e2f/1">
                                     click
                                 </a>
@@ -86,10 +93,9 @@ export default class FormWithValidation extends Component {
                                         <li key={k}>{k}: {v.toString()}</li>
                                     ))}
                             </ul>
-
                         </div>
                     )
-                    : ''}
+                    : <></>}
                 <form
                     className={styles.form}
                     method="post"
@@ -97,7 +103,7 @@ export default class FormWithValidation extends Component {
                     onSubmit={this.submitHandler}
                 >
                     {this.children}
-                    <SubmitButton>
+                    <SubmitButton disabled={this.state.submitDisabled}>
                         Submit
                     </SubmitButton>
                 </form>
