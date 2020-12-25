@@ -5,8 +5,6 @@ import DataService from "../../services/DataService";
 import DataMember from "./memberInfo";
 
 export default class FormWithValidation extends Component {
-    validators = {}
-
     constructor(props) {
         super(props);
 
@@ -15,24 +13,8 @@ export default class FormWithValidation extends Component {
             submitDisabled: false,
         }
 
+        this.validators = {}
         this.configureChildren()
-    }
-
-    /**
-     * Passes setValue(value: any) function for updating this.form
-     * Passes this.validators to input to forward reference validate() method
-     */
-    configureChildren() {
-        this.children = this.props.children
-            .map(x => ({
-                ...x,
-                props:
-                    {
-                        ...x.props,
-                        setValue: this.setValueOf(x.props.name),
-                        validators: this.validators
-                    }
-            }))
     }
 
     componentDidMount() {
@@ -52,12 +34,49 @@ export default class FormWithValidation extends Component {
     }
 
     /**
+     * Attaches functions for communication and control to children
+     */
+    configureChildren() {
+        this.children = this.props.children
+            .map(x => ({
+                ...x,
+                props:
+                    {
+                        ...x.props,
+                        setValue: this.setValueOf(x.props.name),
+                        registerValidator: this.registerValidator(x.props.name),
+                        unregisterValidator: this.unregisterValidator(x.props.name),
+                    }
+            }))
+    }
+
+    /**
      * Curries a function for setting input component value
      * @param {String} name Name from the input component
-     * @returns {function(...[*]=)} Callback for setting form[name] value
+     * @returns {function(*)} Callback for setting form[name] value
      */
-    setValueOf = (name) => (value) => {
-        this.form[name] = value
+    setValueOf(name) {
+        return (value) => {
+            this.form[name] = value
+        }
+    }
+
+    /**
+     * Curries a function for registering input component validation method
+     * @param name {String} Name from the input component
+     * @returns {function(function(): void): void} Callback for adding validator function to validators object
+     */
+    registerValidator(name) {
+        return (validateFunc) => this.validators[name] = validateFunc
+    }
+
+    /**
+     * Curries a function for unregistering input component validation method
+     * @param name {String} Name from the input component
+     * @returns {function(): boolean} Callback for removing validator function from validators object
+     */
+    unregisterValidator(name) {
+        return () => delete this.validators[name]
     }
 
     submitHandler = async (event) => {
