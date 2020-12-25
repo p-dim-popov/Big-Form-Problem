@@ -3,6 +3,7 @@ import styles from './style.module.css';
 import SubmitButton from "../SubmitButton";
 import DataService from "../../services/DataService";
 import DataMember from "./memberInfo";
+import PrettyPrintObject from "../PrettyPrintObject";
 
 export default class FormWithValidation extends Component {
     constructor(props) {
@@ -106,12 +107,7 @@ export default class FormWithValidation extends Component {
                                     click
                                 </a>
                             </div>
-                            <ul>
-                                {Object.entries(this.form)
-                                    .map(([k, v]) => (
-                                        <li key={k}>{k}: {v.toString()}</li>
-                                    ))}
-                            </ul>
+                            <PrettyPrintObject object={this.form}/>
                         </div>
                     )
                     : <></>}
