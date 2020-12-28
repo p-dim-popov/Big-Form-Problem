@@ -4,18 +4,26 @@ import ValidationSummary from "./ValidationSummary";
 
 export default function withValidationSummary(WrappedComponent) {
     class WithValidationSummary extends Component {
-        validator = validator(this.props.validations || [])
-        elementRef = React.createRef()
-
         constructor(props) {
             super(props);
             this.state = {
                 errorMessages: [],
             }
+
+            this.elementRef = React.createRef()
+            this.begunValidation = false
+            this.validate = this.validate.bind(this)
+            this.beginValidating = this.beginValidating.bind(this)
+            this.changeHandler = this.changeHandler.bind(this)
         }
 
         componentDidMount() {
-            this.props.registerValidator(() => this.validate(this.elementRef.current))
+            this.validator = validator(this.props.validations || [])
+            this.props.registerValidator(this.validate)
+        }
+
+        componentDidUpdate(prevProps, prevState, snapshot) {
+            this.validator = validator(this.props.validations || [])
         }
 
         componentWillUnmount() {
@@ -23,37 +31,40 @@ export default function withValidationSummary(WrappedComponent) {
         }
 
         /**
-         * Validates the input field
-         * @param elementRef {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement} Reference to the input field
+         * Validates the element ref field
          */
-        validate(elementRef) {
-            const value = elementRef.files || elementRef.value
+        validate() {
+            const value = this.elementRef.current.files || this.elementRef.current.value
             const errorMessages = this.validator.validate(value)
 
             this.setState({errorMessages, isValid: !!errorMessages.length})
             this.props.setValue(!!errorMessages.length ? null : value)
         }
 
-        beginValidating = (event) => {
+        beginValidating () {
             if (!!this.begunValidation) return;
             this.begunValidation = true
-            this.changeHandler(event)
+            this.changeHandler()
         }
 
-        changeHandler = (event) => {
+        changeHandler() {
             if (!this.begunValidation) return;
-            this.validate(event.target)
+            this.validate()
+        }
+
+        filterOutWrappedComponentProps(){
+            const {validations, setValue, registerValidator, unregisterValidator, ...wrappedComponentProps} = this.props
+            return wrappedComponentProps
         }
 
         render() {
-            const {validations, setValue, registerValidator, unregisterValidator, ...wrappedComponentProps} = this.props
             return (
                 <ValidationSummary errorMessages={this.state.errorMessages}>
                     <WrappedComponent
                         ref={this.elementRef}
                         onBlur={this.beginValidating}
                         onChange={this.changeHandler}
-                        {...wrappedComponentProps}
+                        {...this.filterOutWrappedComponentProps()}
                     />
                 </ValidationSummary>
             )

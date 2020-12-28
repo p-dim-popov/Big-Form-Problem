@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import styles from './style.module.css';
 import SubmitButton from "../SubmitButton";
 import DataService from "../../services/DataService";
-import DataMember from "./memberInfo";
 import PrettyPrintObject from "../PrettyPrintObject";
 
 export default class FormWithValidation extends Component {
@@ -14,20 +13,9 @@ export default class FormWithValidation extends Component {
             submitDisabled: false,
         }
 
+        this.form = {}
         this.validators = {}
         this.configureChildren()
-    }
-
-    componentDidMount() {
-        this.form = this.props.children.reduce((acc, cur) => {
-            return (
-                {
-                    ...acc,
-                    [cur.props.name]: !!cur.props.required
-                        ? DataMember.isRequired
-                        : DataMember.isNotRequired
-                });
-        }, {})
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -41,13 +29,12 @@ export default class FormWithValidation extends Component {
         this.children = this.props.children
             .map(x => ({
                 ...x,
-                props:
-                    {
+                props: {
                         ...x.props,
                         setValue: this.setValueOf(x.props.name),
                         registerValidator: this.registerValidator(x.props.name),
                         unregisterValidator: this.unregisterValidator(x.props.name),
-                    }
+                    },
             }))
     }
 
@@ -56,29 +43,21 @@ export default class FormWithValidation extends Component {
      * @param {String} name Name from the input component
      * @returns {function(*)} Callback for setting form[name] value
      */
-    setValueOf(name) {
-        return (value) => {
-            this.form[name] = value
-        }
-    }
+    setValueOf = (name) => (value) => this.form[name] = value
 
     /**
      * Curries a function for registering input component validation method
      * @param name {String} Name from the input component
      * @returns {function(function(): void): void} Callback for adding validator function to validators object
      */
-    registerValidator(name) {
-        return (validateFunc) => this.validators[name] = validateFunc
-    }
+    registerValidator = (name) => (validateFunc) => this.validators[name] = validateFunc
 
     /**
      * Curries a function for unregistering input component validation method
      * @param name {String} Name from the input component
      * @returns {function(): boolean} Callback for removing validator function from validators object
      */
-    unregisterValidator(name) {
-        return () => delete this.validators[name]
-    }
+    unregisterValidator = (name) => () => delete this.validators[name]
 
     submitHandler = async (event) => {
         event.preventDefault()
@@ -107,7 +86,7 @@ export default class FormWithValidation extends Component {
                                     click
                                 </a>
                             </div>
-                            <PrettyPrintObject object={this.form}/>
+                            <PrettyPrintObject object={this.form} />
                         </div>
                     )
                     : <></>}

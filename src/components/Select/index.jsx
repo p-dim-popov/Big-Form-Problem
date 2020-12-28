@@ -1,44 +1,31 @@
-import React, {Component} from 'react'
+import React, {useState, useEffect} from 'react'
 import styles from './style.module.css'
 
-class InnerSelect extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: null,
-        }
+const Select = React.forwardRef(function (props, ref) {
+    const [data, setData] = useState(null)
 
-        const {initiallyEmpty, getData, innerRef, ...selectProps} = this.props
-        this.getData = getData
-        this.selectProps = selectProps
-        this.innerRef = innerRef
-    }
+    const {initiallyEmpty, getData, ...selectProps} = props
 
-    async componentDidMount() {
-        this.setState({data: await this.getData()})
-    }
+    useEffect(function () {
+        if (!!getData)
+            getData().then(d => setData(d))
+    }, [getData])
 
-    render() {
-        return (
-            <div>
-                {!this.state.data ? <div>Loading...</div> : ''}
-                <select
-                    ref={this.innerRef}
-                    className={!!this.state.data ? styles.visible : styles.hidden}
-                    {...this.selectProps}
-                    hidden={!this.state.data}
-                    defaultValue=''>
-                    {this.props.initiallyEmpty ? <option hidden disabled value='' /> : ''}
-                    {this.state.data?.map(({key, value, textContent}) => (
-                        <option key={key} value={value}>{textContent || value}</option>))}
-                </select>
-            </div>
-        )
-    }
-}
-
-const Select = React.forwardRef(
-    (props, ref) =>
-        <InnerSelect innerRef={ref} {...props} />)
+    return (
+        <>
+            {!data ? <div>Loading...</div> : <></>}
+            <select
+                ref={ref}
+                className={!!data ? styles.visible : styles.hidden}
+                {...selectProps}
+                hidden={!data}
+                defaultValue=''>
+                {initiallyEmpty ? <option hidden disabled value='' /> : ''}
+                {data?.map(({key, value, textContent}) => (
+                    <option key={key} value={value}>{textContent || value}</option>))}
+            </select>
+        </>
+    )
+})
 
 export default Select

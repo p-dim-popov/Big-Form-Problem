@@ -15,7 +15,7 @@ export default function withLabel(WrappedComponent) {
         || WrappedComponent.name
         || 'Component'
 
-    WithLabel.displayName = `withValidationSummary(${wrappedComponentName})`
+    WithLabel.displayName = `withLabel(${wrappedComponentName})`
 
     return WithLabel
 }
