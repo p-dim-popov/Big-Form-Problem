@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import styles from './style.module.css'
+import PropTypes from "prop-types";
+
+const displayName = 'Select'
+
+const propTypes = {
+    getData: PropTypes.func.isRequired,
+    initiallyEmpty: PropTypes.bool,
+}
 
 const Select = React.forwardRef(function (props, ref) {
     const [data, setData] = useState(null)
@@ -27,5 +35,8 @@ const Select = React.forwardRef(function (props, ref) {
         </>
     )
 })
+
+Select.displayName = displayName
+Select.propTypes = propTypes
 
 export default Select

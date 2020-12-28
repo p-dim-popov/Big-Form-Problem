@@ -5,4 +5,6 @@ const Textarea = React.forwardRef((props, ref) => {
     return <textarea ref={ref} className={styles.textarea} {...props}/>
 })
 
+Textarea.displayName = 'Textarea'
+
 export default Textarea

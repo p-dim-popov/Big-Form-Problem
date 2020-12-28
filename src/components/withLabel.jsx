@@ -1,7 +1,21 @@
 import React from 'react'
 import Label from "./Label";
+import PropTypes from "prop-types";
+
+withLabel.propTypes = {
+    WrappedComponent: PropTypes.element.isRequired,
+}
 
 export default function withLabel(WrappedComponent) {
+    WithLabel.propTypes = {
+        label: PropTypes.string.isRequired,
+        required: PropTypes.bool,
+    }
+
+    WithLabel.defaultProps = {
+        required: false
+    }
+
     function WithLabel(props) {
         const {label, required, ...wrappedComponentProps} = props
         return (

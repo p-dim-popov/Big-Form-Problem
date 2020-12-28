@@ -30,11 +30,11 @@ export default class FormWithValidation extends Component {
             .map(x => ({
                 ...x,
                 props: {
-                        ...x.props,
-                        setValue: this.setValueOf(x.props.name),
-                        registerValidator: this.registerValidator(x.props.name),
-                        unregisterValidator: this.unregisterValidator(x.props.name),
-                    },
+                    ...x.props,
+                    setValue: this.setValueOf(x.props.name),
+                    registerValidator: this.registerValidator(x.props.name),
+                    unregisterValidator: this.unregisterValidator(x.props.name),
+                },
             }))
     }
 
@@ -63,9 +63,19 @@ export default class FormWithValidation extends Component {
         event.preventDefault()
 
         await this.setState({submitDisabled: true})
-        Object.values(this.validators).forEach(v => v())
-        const areAllValid = Object.values(this.form).filter(v => v === null).length === 0
-        if (!areAllValid) {
+
+        let hasValidationError = false
+        for (const name of this.children.map(x => x.props.name)) {
+            if (this.validators.hasOwnProperty(name)) {
+                this.validators[name]()
+                if (!this.form.hasOwnProperty(name) || this.form[name] === null){
+                    hasValidationError = true
+                    break
+                }
+            }
+        }
+
+        if (hasValidationError) {
             this.setState({submitDisabled: false})
             return
         }

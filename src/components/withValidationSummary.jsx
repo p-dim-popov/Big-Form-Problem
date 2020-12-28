@@ -1,8 +1,26 @@
 import React, {Component} from 'react'
 import validator from '../utils/validation/validator'
 import ValidationSummary from "./ValidationSummary";
+import PropTypes from "prop-types";
 
 export default function withValidationSummary(WrappedComponent) {
+    const wrappedComponentName = WrappedComponent.displayName
+        || WrappedComponent.name
+        || 'Component'
+    const displayName = `withValidationSummary(${wrappedComponentName})`
+
+
+    const propTypes = {
+        registerValidator: PropTypes.func.isRequired,
+        unregisterValidator: PropTypes.func.isRequired,
+        setValue: PropTypes.func.isRequired,
+        validations: PropTypes.arrayOf(PropTypes.func),
+    }
+
+    const defaultValues = {
+        validations: []
+    }
+
     class WithValidationSummary extends Component {
         constructor(props) {
             super(props);
@@ -18,12 +36,12 @@ export default function withValidationSummary(WrappedComponent) {
         }
 
         componentDidMount() {
-            this.validator = validator(this.props.validations || [])
+            this.validator = validator(this.props.validations)
             this.props.registerValidator(this.validate)
         }
 
         componentDidUpdate(prevProps, prevState, snapshot) {
-            this.validator = validator(this.props.validations || [])
+            this.validator = validator(this.props.validations)
         }
 
         componentWillUnmount() {
@@ -34,11 +52,17 @@ export default function withValidationSummary(WrappedComponent) {
          * Validates the element ref field
          */
         validate() {
+            this.begunValidation = true
             const value = this.elementRef.current.files || this.elementRef.current.value
             const errorMessages = this.validator.validate(value)
 
-            this.setState({errorMessages, isValid: !!errorMessages.length})
-            this.props.setValue(!!errorMessages.length ? null : value)
+            const isValid = !errorMessages.length
+
+            if (!isValid)
+                this.elementRef.current.focus()
+
+            this.setState({errorMessages})
+            this.props.setValue(isValid ? value : null)
         }
 
         beginValidating () {
@@ -71,11 +95,9 @@ export default function withValidationSummary(WrappedComponent) {
         }
     }
 
-    const wrappedComponentName = WrappedComponent.displayName
-        || WrappedComponent.name
-        || 'Component'
-
-    WithValidationSummary.displayName = `withValidationSummary(${wrappedComponentName})`
+    WithValidationSummary.displayName = displayName
+    WithValidationSummary.propTypes = propTypes
+    WithValidationSummary.defaultValues = defaultValues
 
     return WithValidationSummary;
 }
