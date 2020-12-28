@@ -8,6 +8,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ---
 
+### First `npm install` and then one of the following:
+
 
 ### `npm run start`
 
@@ -30,7 +32,7 @@ You will also see any lint errors in the console.
 
 ---
 
-### Double click on `start.cmd`(Windows) or `start.sh` (Linux)
+### Double click on `start.cmd` (Windows) or `start.sh` (Linux)
 
 Runs the app in the development mode with default browser.
 Open [http://localhost:3001](http://localhost:3001) to view it in the browser.

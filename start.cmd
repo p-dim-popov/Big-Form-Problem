@@ -1,1 +1,1 @@
-npm run start default
+npm install && npm run start default
